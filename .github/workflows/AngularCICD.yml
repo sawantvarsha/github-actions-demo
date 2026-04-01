@@ -1,4 +1,4 @@
-name: Angular CI
+name: Angular CI Pipeline
 
 on:
   push:
@@ -9,20 +9,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: Angular-HelloWorld
+
     steps:
-    - name: Checkout code
+    - name: Checkout Code
       uses: actions/checkout@v4
 
     - name: Setup Node
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: 18
 
-    - name: Install dependencies
+    - name: Install Dependencies
       run: npm install
 
-    - name: Build Angular app
-      run: npm run build 
+    - name: Build Angular App
+      run: npm run build -- --configuration production
 
-    - name: Run tests
+    - name: Run Tests
       run: npm test -- --watch=false --browsers=ChromeHeadless
