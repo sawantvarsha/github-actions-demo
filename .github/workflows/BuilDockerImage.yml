@@ -3,7 +3,7 @@ name: Angular Docker Pipeline
 on:
   push:
     branches:
-      - main
+      - UAT
 
 jobs:
   build:
