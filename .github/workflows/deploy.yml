@@ -1,0 +1,31 @@
+name: Multi Env Pipeline
+
+on:
+  push:
+    branches:
+      - develop
+      - uat
+      - main
+
+jobs:
+
+  deploy-sit:
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to SIT
+      run: echo "Deploying to SIT"
+
+  deploy-uat:
+    if: github.ref == 'refs/heads/uat'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to UAT
+      run: echo "Deploying to UAT"
+
+  deploy-prod:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to PROD
+      run: echo "Deploying to PROD"
