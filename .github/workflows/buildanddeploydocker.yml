@@ -23,4 +23,4 @@ jobs:
       run:  docker images
 
     - name: Push Docker Image
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/github-actions-demo
+      run: docker push sawantvarsha/angular-app1:latest
