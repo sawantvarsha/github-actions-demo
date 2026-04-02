@@ -1,1 +1,54 @@
+name: Build and Push Docker Image
 
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      IMAGE_NAME: angular-app2
+      IMAGE_TAG: v1
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Print Message
+      run: echo "Cloned Repository"
+
+    - name: Print Build Info
+      run: |
+        echo "Starting Docker Build"
+        echo "Docker Username: $DOCKER_USERNAME"
+        echo "Image Name: $IMAGE_NAME"
+        echo "Image Tag: $IMAGE_TAG"
+
+    - name: Login to DockerHub
+      run: |
+        echo "Logging into DockerHub..."
+        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+    - name: Build Docker Image
+      run: |
+        echo "Building Docker Image..."
+        docker build -t $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG .
+        echo "Docker Image Built Successfully"
+
+    - name: Show Docker Images
+      run: |
+        echo "Available Docker Images:"
+        docker images
+
+    - name: Push Docker Image
+      run: |
+        echo "Pushing Image: $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG"
+        docker push $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG
+        echo "Push Completed"
+
+    - name: Final Docker Images
+      run: docker images
