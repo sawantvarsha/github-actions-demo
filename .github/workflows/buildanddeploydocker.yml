@@ -23,7 +23,7 @@ jobs:
       run:  docker images
 
     - name: Tag Docker Image
-      run: docker tag angular-app1:latest "${{ secrets.DOCKER_USERNAME }}/angular-app1:latest"
+      run: docker tag angular-app1:latest ${{ secrets.DOCKER_USERNAME }}/angular-app1:latest
 
     - name: Push Docker Image
       run: docker push ${{ secrets.DOCKER_USERNAME }}/github-actions-demo
