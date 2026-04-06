@@ -1,4 +1,4 @@
-name: Deploy Application
+name: Deploy
 
 on:
   workflow_call:
@@ -13,10 +13,12 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: production
+    
+    environment: production   # 👈 Manual approval here
 
     steps:
-      - name: Deploy Application
-        run: |
-          echo "Deploying Application 🚀"
-          echo "Image: ${{ inputs.image_name }}:${{ inputs.tag }}"
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy
+        run: echo "Deploying to Kubernetes"
