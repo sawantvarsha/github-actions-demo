@@ -1,1 +1,22 @@
+name: Deploy Application
 
+on:
+  workflow_call:
+    inputs:
+      image_name:
+        required: true
+        type: string
+      tag:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Deploy Application
+        run: |
+          echo "Deploying Application 🚀"
+          echo "Image: ${{ inputs.image_name }}:${{ inputs.tag }}"
