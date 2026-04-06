@@ -41,17 +41,26 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ inputs.image_name }}:${{ inputs.tag }}-node${{ matrix.node-version }} .
-          
+
       - name: Verify Docker Images
         run: docker images
 
       - name: Save Docker Image
-        run: docker save ${{ secrets.DOCKER_USERNAME }}/${{ inputs.image_name }}:${{ inputs.tag }}-node${{ matrix.node-version }} > image-node${{ matrix.node-version }}.tar
+        run: |
+          docker save ${{ secrets.DOCKER_USERNAME }}/${{ inputs.image_name }}:${{ inputs.tag }}-node${{ matrix.node-version }} > image-node${{ matrix.node-version }}.tar
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-         name: docker-image-node${{ matrix.node-version }}
-         path: image-node${{ matrix.node-version }}.tar
+          name: docker-image-node${{ matrix.node-version }}
+          path: image-node${{ matrix.node-version }}.tar
 
-      
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push Image
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ inputs.image_name }}:${{ inputs.tag }}-node${{ matrix.node-version }}
