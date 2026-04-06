@@ -20,3 +20,11 @@ jobs:
       image_name: workflowapp
       tag: v1
     secrets: inherit
+
+  deploy:
+   needs: scan
+   uses: ./.github/workflows/deploy.yml
+   with:
+    image_name: workflowapp
+    tag: v1
+  secrets: inherit
