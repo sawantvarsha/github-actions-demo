@@ -44,3 +44,14 @@ jobs:
           
       - name: Verify Docker Images
         run: docker images
+
+      - name: Save Docker Image
+        run: docker save myimage > image.tar
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+         name: docker-image
+         path: image.tar
+
+      
