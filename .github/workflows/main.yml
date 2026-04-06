@@ -12,3 +12,11 @@ jobs:
       image_name: workflowapp
       tag: v1
     secrets: inherit
+
+  scan:
+    needs: build
+    uses: ./.github/workflows/scan.yml
+    with:
+      image_name: workflowapp
+      tag: v1
+    secrets: inherit
