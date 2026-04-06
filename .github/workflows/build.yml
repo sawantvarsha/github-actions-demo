@@ -46,7 +46,7 @@ jobs:
         run: docker images
 
       - name: Save Docker Image
-        run: docker save myimage > image.tar
+        run: docker save ${{ secrets.DOCKER_USERNAME }}/${{ inputs.image_name }}:${{ inputs.tag }}-node${{ matrix.node-version }} > image-node${{ matrix.node-version }}.tar
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
