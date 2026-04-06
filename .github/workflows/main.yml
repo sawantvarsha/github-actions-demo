@@ -1,1 +1,14 @@
+name: CI Pipeline
 
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    with:
+      image_name: angular-app
+      tag: v1
+    secrets: inherit
