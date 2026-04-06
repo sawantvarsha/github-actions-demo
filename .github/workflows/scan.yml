@@ -33,7 +33,8 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: ${{ secrets.DOCKER_USERNAME }}/${{ inputs.image_name }}:${{ inputs.tag }}-node${{ matrix.node-version }}
-          format: table
+          format: json
+          output: trivy-report-${{ matrix.node-version }}.json
           exit-code: 0
           severity: CRITICAL,HIGH
 
