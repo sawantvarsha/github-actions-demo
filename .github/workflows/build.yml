@@ -51,7 +51,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-         name: docker-image
+         name: docker-image-node${{ matrix.node-version }}
          path: image-node${{ matrix.node-version }}.tar
 
       
